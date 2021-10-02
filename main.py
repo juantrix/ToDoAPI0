@@ -65,7 +65,7 @@ def delete_task(id: int):
         session.commit()
         return 'Deleted'
     else:
-        return 'The task not exist'
+        return 'the task doesnt exist'
 
 
 @app.put('/change')
@@ -78,7 +78,7 @@ def change_task(id, title, body, completed):
         task.first().date = datetime.datetime.now()
         return 'Changed'
     else:
-        return 'The task not exist'
+        return 'the task doesnt exist'
 
 
 if __name__ == '__main__':
