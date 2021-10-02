@@ -3,11 +3,28 @@ from fastapi import FastAPI
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, create_engine, select
 from sqlalchemy.orm import sessionmaker
+from fastapi.middleware.cors import CORSMiddleware
 
 # para conectar la base de datos se le pasa el siguiente formato 'nombreGestor://nombreUser:@direccion/nombreDB'
 engine = create_engine('postgresql://gutuuijp:iOnVnPilpeuqIOHeIrm4ImPymFpCGNqj@kesavan.db.elephantsql.com/gutuuijp')
 Base = declarative_base()
 app = FastAPI()
+
+origins = [
+    "http://localhost.herokuapp.com",
+    "https://localhost.herokuapp.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Task(Base):
     __tablename__ = 'Task'
