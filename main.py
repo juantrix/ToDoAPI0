@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, create_engine
 from sqlalchemy.orm import sessionmaker
 
 # para conectar la base de datos se le pasa el siguiente formato 'nombreGestor://nombreUser:@direccion/nombreDB'
-engine = create_engine('postgresql://postgres:123456@localhost/pythondb')
+engine = create_engine('postgres://gutuuijp:iOnVnPilpeuqIOHeIrm4ImPymFpCGNqj@kesavan.db.elephantsql.com/gutuuijp')
 Base = declarative_base()
 app = FastAPI()
 
