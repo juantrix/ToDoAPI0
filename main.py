@@ -18,6 +18,8 @@ origins = [
     "http://localhost:3000",
     "http://localhost:*",
     "http://localhost:*/*",
+    "http://localhost.herokuapp.com/*",
+    
 
 ]
 
