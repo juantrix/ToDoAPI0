@@ -65,16 +65,15 @@ def delete_task(id: int):
 
 @app.put('/change')
 def change_task(id: int, title: str, body: str, completed: bool):
-    with Session() as session:
-        task = session.query(Task).filter(Task.id==id)
-        if task.first() is not None:
-            task.first().body = body
-            task.first().title = title
-            task.first().completed = bool(completed)
-            task.first().date = datetime.datetime.now()
-            return 'Changed'
-        else:
-            return 'the task doesnt exist'
+    task = session.query(Task).filter(Task.id==id)
+    if task.first() is not None:
+        task.first().body = body
+        task.first().title = title
+        task.first().completed = bool(completed)
+        task.first().date = datetime.datetime.now()
+        return 'Changed'
+    else:
+        return 'the task doesnt exist'
 
 
 if __name__ == '__main__':
