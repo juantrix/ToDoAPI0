@@ -47,8 +47,7 @@ def newTask(title: str, body: str):
 
 @app.get('/tasks')
 def task_list():
-    with Session() as session:
-        return session.query(Task).all()
+    return session.query(Task).all()
 
 
 @app.delete('/delete')
