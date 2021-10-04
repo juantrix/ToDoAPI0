@@ -71,7 +71,7 @@ def delete_task(id: int):
 
 
 @app.put('/change')
-def change_task(id, title, body, completed):
+def change_task(id: int, title: str, body: str, completed: bool):
     task = session.query(Task).filter(Task.id==id)
     if task.first() is not None:
         task.first().body = body
