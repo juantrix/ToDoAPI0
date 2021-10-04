@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from fastapi.middleware.cors import CORSMiddleware
 
 # para conectar la base de datos se le pasa el siguiente formato 'nombreGestor://nombreUser:@direccion/nombreDB'
-engine = create_engine('postgresql://gutuuijp:iOnVnPilpeuqIOHeIrm4ImPymFpCGNqj@kesavan.db.elephantsql.com/gutuuijp')
+engine = create_engine('postgresql://gutuuijp:iOnVnPilpeuqIOHeIrm4ImPymFpCGNqj@kesavan.db.elephantsql.com/gutuuijp', pool_pre_ping=True)
 Base = declarative_base()
 app = FastAPI()
 
