@@ -38,9 +38,8 @@ session = Session()
 
 @app.post('/new')
 def newTask(title: str, body: str):
-    with Session() as session:
-        session.add(Task(title=title,body=body))
-        session.commit()
+    session.add(Task(title=title,body=body))
+    session.commit()
 
     return  'added'
 
@@ -52,14 +51,13 @@ def task_list():
 
 @app.delete('/delete')
 def delete_task(id: int):
-    with Session() as session:
-        task = session.query(Task).filter(Task.id==id)
-        if task.first() is not None:
-            task.delete()
-            session.commit()
-            return 'Deleted'
-        else:
-            return 'the task doesnt exist'
+    task = session.query(Task).filter(Task.id==id)
+    if task.first() is not None:
+        task.delete()
+        session.commit()
+        return 'Deleted'
+    else:
+        return 'the task doesnt exist'
 
 
 @app.put('/change')
