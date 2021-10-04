@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from fastapi.middleware.cors import CORSMiddleware
 
 # para conectar la base de datos se le pasa el siguiente formato 'nombreGestor://nombreUser:@direccion/nombreDB'
-engine = create_engine('postgresql://scqbykeqqlvmhy:14c7a2b194592d6d23f7a02c19590e6cc860faa3acdf97cae5c4f21aa1a97999@ec2-44-194-201-94.compute-1.amazonaws.com:5432/d6v3fr4b5uvlc6', pool_pre_ping=True)
+engine = create_engine('postgresql://scqbykeqqlvmhy:14c7a2b194592d6d23f7a02c19590e6cc860faa3acdf97cae5c4f21aa1a97999@ec2-44-194-201-94.compute-1.amazonaws.com:5432/d6v3fr4b5uvlc6')
 Base = declarative_base()
 app = FastAPI()
 
@@ -33,7 +33,7 @@ class Task(Base):
         return self.title
 
 
-Session = sessionmaker(bind=engine, autocommit=True)
+Session = sessionmaker(bind=engine)
 session = Session()
 
 @app.post('/new')
