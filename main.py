@@ -37,7 +37,7 @@ Session = sessionmaker(bind=engine, autocommit=True)
 session = Session()
 
 @app.post('/new')
-async def newTask(title: str, body: str):
+def newTask(title: str, body: str):
     with Session() as session:
         session.add(Task(title=title,body=body))
         session.commit()
@@ -46,32 +46,35 @@ async def newTask(title: str, body: str):
 
 
 @app.get('/tasks')
-async def task_list():
-    return session.query(Task).all()
+def task_list():
+    with Session() as session:
+        return session.query(Task).all()
 
 
 @app.delete('/delete')
-async def delete_task(id: int):
-    task = session.query(Task).filter(Task.id==id)
-    if task.first() is not None:
-        task.delete()
-        session.commit()
-        return 'Deleted'
-    else:
-        return 'the task doesnt exist'
+def delete_task(id: int):
+    with Session() as session:
+        task = session.query(Task).filter(Task.id==id)
+        if task.first() is not None:
+            task.delete()
+            session.commit()
+            return 'Deleted'
+        else:
+            return 'the task doesnt exist'
 
 
 @app.put('/change')
-async def change_task(id: int, title: str, body: str, completed: bool):
-    task = session.query(Task).filter(Task.id==id)
-    if task.first() is not None:
-        task.first().body = body
-        task.first().title = title
-        task.first().completed = bool(completed)
-        task.first().date = datetime.datetime.now()
-        return 'Changed'
-    else:
-        return 'the task doesnt exist'
+def change_task(id: int, title: str, body: str, completed: bool):
+    with Session() as session:
+        task = session.query(Task).filter(Task.id==id)
+        if task.first() is not None:
+            task.first().body = body
+            task.first().title = title
+            task.first().completed = bool(completed)
+            task.first().date = datetime.datetime.now()
+            return 'Changed'
+        else:
+            return 'the task doesnt exist'
 
 
 if __name__ == '__main__':
