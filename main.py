@@ -10,18 +10,7 @@ engine = create_engine('postgresql://scqbykeqqlvmhy:14c7a2b194592d6d23f7a02c1959
 Base = declarative_base()
 app = FastAPI()
 
-origins = [
-    "http://localhost.herokuapp.com",
-    "https://localhost.herokuapp.com",
-    "http://localhost",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://localhost:*",
-    "http://localhost:*/*",
-    "http://localhost.herokuapp.com/*",
-    
-
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
