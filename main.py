@@ -37,7 +37,7 @@ Session = sessionmaker(bind=engine, autocommit=True)
 session = Session()
 
 @app.post('/new')
-def newTask(title: str, body: str):
+async def newTask(title: str, body: str):
     with Session() as session:
         session.add(Task(title=title,body=body))
         session.commit()
@@ -46,12 +46,12 @@ def newTask(title: str, body: str):
 
 
 @app.get('/tasks')
-def task_list():
+async def task_list():
     return session.query(Task).all()
 
 
 @app.delete('/delete')
-def delete_task(id: int):
+async def delete_task(id: int):
     task = session.query(Task).filter(Task.id==id)
     if task.first() is not None:
         task.delete()
@@ -62,7 +62,7 @@ def delete_task(id: int):
 
 
 @app.put('/change')
-def change_task(id: int, title: str, body: str, completed: bool):
+async def change_task(id: int, title: str, body: str, completed: bool):
     task = session.query(Task).filter(Task.id==id)
     if task.first() is not None:
         task.first().body = body
