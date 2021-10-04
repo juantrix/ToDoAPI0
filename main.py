@@ -42,7 +42,7 @@ class Task(Base):
         return self.title
 
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine, autocommit=True)
 session = Session()
 
 @app.post('/new')
