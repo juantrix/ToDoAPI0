@@ -38,39 +38,44 @@ session = Session()
 
 @app.post('/new')
 def newTask(title: str, body: str):
-    session.add(Task(title=title,body=body))
-    session.commit()
+    with Session() as session:
+        session.add(Task(title=title,body=body))
+        session.commit()
 
     return  'added'
 
 
 @app.get('/tasks')
 def task_list():
-    return session.query(Task).all()
+    with Session() as session:
+        return session.query(Task).all()
 
 
 @app.delete('/delete')
 def delete_task(id: int):
-    task = session.query(Task).filter(Task.id==id)
-    if task.first() is not None:
-        task.delete()
-        session.commit()
-        return 'Deleted'
-    else:
-        return 'the task doesnt exist'
+    with Session() as session:
+        task = session.query(Task).filter(Task.id==id)
+        if task.first() is not None:
+            task.delete()
+            session.commit()
+            return 'Deleted'
+        else:
+            return 'the task doesnt exist'
 
 
 @app.put('/change')
 def change_task(id: int, title: str, body: str, completed: bool):
-    task = session.query(Task).filter(Task.id==id)
-    if task.first() is not None:
-        task.first().body = body
-        task.first().title = title
-        task.first().completed = bool(completed)
-        task.first().date = datetime.datetime.now()
-        return 'Changed'
-    else:
-        return 'the task doesnt exist'
+    with Session() as session:
+        task = session.query(Task).filter(Task.id==id)
+        if task.first() is not None:
+            task.first().body = body
+            task.first().title = title
+            task.first().completed = bool(completed)
+            task.first().date = datetime.datetime.now()
+            session.commit()
+            return 'Changed'
+        else:
+            return 'the task doesnt exist'
 
 
 if __name__ == '__main__':
