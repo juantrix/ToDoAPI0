@@ -71,7 +71,6 @@ def change_task(id: int, title: str, body: str, completed: bool):
             task.first().body = body
             task.first().title = title
             task.first().completed = bool(completed)
-            task.first().date = datetime.datetime.now()
             session.commit()
             return 'Changed'
         else:
